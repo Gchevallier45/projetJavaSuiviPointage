@@ -11,10 +11,21 @@ public class Department {
 
 	private String departmentName;
 	private Manager manager;
+	private ArrayList<Employee> employeeArray;
 	
-	public Department(String departmentName, Manager manager) {
+	public Department(String departmentName) {
 		this.departmentName = departmentName;
-		this.manager = manager;
+		employeeArray = new ArrayList<Employee>();
+	}
+	
+	public String toString() {
+		String departmentString;
+		departmentString = "Department : " + departmentName + "\n";
+		for(Employee e:employeeArray) {
+			departmentString += "    | " + e.toString();
+		}
+		departmentString += "\n";
+		return departmentString;
 	}
 	
 	@Override
@@ -22,7 +33,7 @@ public class Department {
 	    if (o == null) return false;
 	    if (o == this) return true;
 	    Department department = (Department)o;
-	    if(departmentName.equals(department.getDepartmentName())) {
+	    if(departmentName.equals(department.getName())) {
 	    	return true;
 	    }
 	    else {
@@ -30,11 +41,11 @@ public class Department {
 	    }
 	}
 
-	public String getDepartmentName() {
+	public String getName() {
 		return departmentName;
 	}
 
-	public void setDepartmentName(String departmentName) {
+	public void setName(String departmentName) {
 		this.departmentName = departmentName;
 	}
 	
@@ -46,6 +57,50 @@ public class Department {
 		return manager;
 	}
 	
+	/**
+	 * Check if an employee is already present in the department
+	 * @param e the employee to test
+	 * @return true if the employee is found, false otherwise
+	 */
+	public boolean containsEmployee(Employee e) {
+		if(employeeArray.contains(e)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Add an employee to the department <br/>
+	 * !!! SHOULD NEVER BE CALLED OUTSIDE Company methods or will cause data integrity issues !!!
+	 * @param employee the employee to add
+	 * @throws Exception
+	 */
+	public void addEmployee(Employee employee) throws Exception {
+		if(!employeeArray.contains(employee)) {
+			employeeArray.add(employee);
+		}
+		else {
+			throw new RuntimeException("Employee is already in this department");
+		}
+	}
+	
+	/**
+	 * Remove an employee from the department
+	 * !!! SHOULD NEVER BE CALLED OUTSIDE Company methods or will cause data integrity issues !!!
+	 * @param employee the employee to remove
+	 * @throws Exception
+	 */
+	public void removeEmployee(Employee employee) throws Exception{
+		if(employeeArray.contains(employee)) {
+			employeeArray.remove(employee);
+		}
+		else {
+			throw new RuntimeException("Employee is not in this department");
+		}		
+	}
+	
 	/*public Employee getEmployee(int idEmployee) {
 		Employee toReturn = null;
 		for(Employee e :employees) {
@@ -55,26 +110,6 @@ public class Department {
 			}
 		}
 		return toReturn;
-	}
-
-	public void addEmployee(Employee employee) {
-		if(employees.contains(employee) == true) {
-			throw new RuntimeException("Employé n°" + employee.getId() + " déjà ajouté");
-		}
-		else {
-			employees.add(employee);
-		}
-	}
-
-	public void deleteEmployee(int idEmployee) {
-		Employee toRemove = getEmployee(idEmployee);
-		
-		if(toRemove == null) {
-			throw new RuntimeException("Employé n°" + idEmployee + " non trouvé");
-		}
-		else {
-			employees.remove(toRemove);
-		}
-	}*/	
+	}*/
 
 }

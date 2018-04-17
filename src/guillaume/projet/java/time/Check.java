@@ -5,34 +5,36 @@
 
 package guillaume.projet.java.time;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Check {
-	RoundedTime inCheck;
-	RoundedTime outCheck;
+	LocalDate date;
+	LocalTime inCheck;
+	LocalTime outCheck;
 	
 	public Check() {
 		
 	}
 
-	public Check(RoundedTime inCheck, RoundedTime outCheck) {
+	public Check(LocalTime inCheck, LocalTime outCheck) {
 		this.inCheck = inCheck;
 		this.outCheck = outCheck;
 	}
 
-	public RoundedTime getInCheck() {
+	public LocalTime getInCheck() {
 		return inCheck;
 	}
 
-	public void setInCheck(RoundedTime inCheck) {
+	public void setInCheck(LocalTime inCheck) {
 		this.inCheck = inCheck;
 	}
 
-	public RoundedTime getOutCheck() {
+	public LocalTime getOutCheck() {
 		return outCheck;
 	}
 
-	public void setOutCheck(RoundedTime outCheck) {
+	public void setOutCheck(LocalTime outCheck) {
 		this.outCheck = outCheck;
 	}
 	
@@ -42,10 +44,10 @@ public class Check {
 	 */
 	public void check() throws Exception {
 		if(inCheck == null) {
-			inCheck = new RoundedTime(LocalDateTime.now());			
+			inCheck = Time.getRoundedTime(LocalTime.now());			
 		}
 		else if(inCheck != null && outCheck == null) {
-			outCheck = new RoundedTime(LocalDateTime.now());			
+			outCheck = Time.getRoundedTime(LocalTime.now());			
 		}
 		else if(inCheck != null && outCheck != null){
 			throw new RuntimeException("L'employé à déjà pointé pour la journée");
